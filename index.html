@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sorry Pufferfish 💖</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- Google Font -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:'Poppins',sans-serif;
+}
+
+/* 🌸 PINK BACKGROUND */
+body{
+  background:linear-gradient(135deg,#ff5fa2,#ffb3d9);
+  overflow:hidden;
+  color:#ffffff;
+}
+
+/* 🌸 PAGES */
+.page{
+  position:absolute;
+  width:100%;
+  height:100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  padding:20px;
+  opacity:0;
+  transform:translateX(100%);
+  transition:1s ease;
+  pointer-events:none;
+}
+
+.page.active{
+  opacity:1;
+  transform:translateX(0);
+  pointer-events:auto;
+}
+
+/* 🌸 CARD */
+.card{
+  background:rgba(255,105,180,0.35);
+  color:#ffffff;
+  padding:30px;
+  border-radius:25px;
+  max-width:520px;
+  text-align:center;
+  box-shadow:0 15px 40px rgba(255,20,147,0.4);
+  animation:pop 1.3s ease;
+}
+
+/* 🌸 TEXT */
+h1{
+  font-size:2.4em;
+  color:#fff0f7;
+}
+
+p{
+  font-size:1.15em;
+  margin:15px 0;
+  color:#fffafc;
+}
+
+/* 🌸 BUTTON */
+button{
+  padding:14px 30px;
+  border:none;
+  border-radius:30px;
+  background:#ff2f92;
+  color:white;
+  font-size:1em;
+  cursor:pointer;
+  margin-top:15px;
+  transition:.3s;
+}
+
+button:hover{
+  background:#ff0f7b;
+  transform:scale(1.1);
+}
+
+/* 🌸 GIF */
+img{
+  width:160px;
+  margin:15px 0;
+  border-radius:20px;
+}
+
+/* 🌸 FLOATING HEARTS */
+.heart{
+  position:fixed;
+  bottom:-20px;
+  font-size:22px;
+  animation:floatUp 6s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes floatUp{
+  from{transform:translateY(0);opacity:1;}
+  to{transform:translateY(-120vh);opacity:0;}
+}
+
+/* 🌸 POP */
+@keyframes pop{
+  0%{transform:scale(0.4);opacity:0;}
+  100%{transform:scale(1);opacity:1;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- 🎵 BACKGROUND MUSIC (optional) -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- 🌸 PAGE 1 -->
+<div class="page active" id="p1">
+  <div class="card">
+    <h1>Oye Pagli 💔</h1>
+    <img src="https://media.giphy.com/media/l2QDM9Jnim1YVILXa/giphy.gif">
+    <p>
+      I know I hurt you…  
+      and I’m really really sorry 🥺
+    </p>
+    <button onclick="nextPage(2)">Please listen 💞</button>
+  </div>
+</div>
+
+<!-- 🌸 PAGE 2 -->
+<div class="page" id="p2">
+  <div class="card">
+    <h1>Our Memories 📸</h1>
+    <img src="https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif">
+    <p>Laughs, late nights & endless talks 🤍</p>
+    <p>You’re not just my friend, you’re my family.</p>
+    <button onclick="nextPage(3)">My Promise 🤞</button>
+  </div>
+</div>
+
+<!-- 🌸 PAGE 3 -->
+<div class="page" id="p3">
+  <div class="card">
+    <h1>My Promise 🤍</h1>
+    <img src="https://media.giphy.com/media/J5ngY5H8gM5O/giphy.gif">
+    <p>
+      I promise to listen more,  
+      care deeper,  
+      and never take you for granted again.
+    </p>
+    <p>No ego. No silence. Just us 💕</p>
+    <button onclick="nextPage(4)">One last thing 🥹</button>
+  </div>
+</div>
+
+<!-- 🌸 PAGE 4 -->
+<div class="page" id="p4">
+  <div class="card">
+    <h1>Forever Besties 💖</h1>
+    <img src="https://media.giphy.com/media/MDJ9IbxxvDUQM/giphy.gif">
+    <p>If I could hug you right now, I would 🫶</p>
+    <p>Please forgive me 💗</p>
+    <p>Best Friends Forever ♾️</p>
+  </div>
+</div>
+
+<script>
+let current = 1;
+
+/* 🌸 PAGE NAVIGATION */
+function nextPage(n){
+  document.getElementById("music").play().catch(()=>{});
+  document.getElementById("p"+current).classList.remove("active");
+  document.getElementById("p"+n).classList.add("active");
+  current = n;
+}
+
+/* 🌸 FLOATING HEARTS */
+setInterval(()=>{
+  const h=document.createElement("div");
+  h.className="heart";
+  h.innerHTML="💖";
+  h.style.left=Math.random()*100+"vw";
+  h.style.fontSize=Math.random()*25+15+"px";
+  document.body.appendChild(h);
+  setTimeout(()=>h.remove(),6000);
+},400);
+
+/* 🌸 SWIPE SUPPORT */
+let startX=0;
+document.addEventListener("touchstart",e=>{
+  startX=e.touches[0].clientX;
+});
+document.addEventListener("touchend",e=>{
+  let endX=e.changedTouches[0].clientX;
+  if(startX-endX>50 && current<4) nextPage(current+1);
+});
+</script>
+
+</body>
+</html>
